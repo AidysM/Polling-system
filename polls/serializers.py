@@ -1,7 +1,7 @@
 from django.db import models
 from rest_framework import serializers
 
-from polls.models import Poll
+from .models import Poll
 
 
 class PollSerializer(serializers.ModelSerializer):
