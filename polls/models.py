@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
 
@@ -31,4 +32,31 @@ class Question(models.Model):
 class PollQuestion(models.Model):
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    text = models.CharField(max_length=1024)
+    order = models.IntegerField(default=0)
+    
+    def __str__(self):
+        return f'{self.text}'
+    
+
+class Select(models.Model):
+    question = models.ForeignKey(Question, related_name='selected', on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='user_select', on_delete=models.CASCADE)
+    answer = models.BooleanField(default=False)
+    selected_answer = ArrayField(models.IntegerField())
+    
+    def __str__(self) -> str:
+        return f'{self.question} {self.user} {self.answer}'
+    
+    def save(self, *args, **kwargs):
+        if self.question.answer_position == self.selected_answer:
+            self.answer = True
+        else:
+            self.answer = False
+        super().save(*args, **kwargs)
+        
 
