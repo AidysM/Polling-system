@@ -2,3 +2,4 @@ django==2.2.10
 djangorestframework==3.12.4
 coreapi==2.3.3
 pyyaml==6.0
+psycopg2-binary==2.9.2

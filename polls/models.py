@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 
 
 class Poll(models.Model):
@@ -11,6 +12,7 @@ class Poll(models.Model):
         return f'{self.name}'
     
     
+
 class Question(models.Model):
     QUESTIONSTYPES = (
             ('TEXT RESPONSE', 'text response'),
@@ -20,6 +22,8 @@ class Question(models.Model):
     question_text = models.TextField(verbose_name='Текст вопроса')
     question_type = models.CharField(max_length=25, choices=QUESTIONSTYPES, verbose_name='Тип вопроса')
     polls = models.ManyToManyField(Poll, related_name='to_polls')
+    options = ArrayField(models.CharField(max_length=200), blank=True, default="")
+    answer_position = ArrayField(models.IntegerField(), default="0")
     
     def __str__(self):
         return f'{self.question_text}'
