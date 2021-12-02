@@ -1,0 +1,10 @@
+<h1>All Polls</h1>
+
+{% for poll in object_list %}
+    <ul>
+        <li>Name: {{ poll.name }}</li>
+        <li>Start day: {{ poll.start_date }}</li>
+        <li>End day: {{ poll.end_date }}</li>
+        <li>Description: {{ poll.description }}</li>
+    </ul>
+{% endfor %}
