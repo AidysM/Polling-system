@@ -11,7 +11,14 @@ class Poll(models.Model):
     def __str__(self):
         return f'{self.name}'
     
+
+def get_default_option():
+        return 'list'
     
+
+def get_default_position():
+        return '0'
+
 
 class Question(models.Model):
     QUESTIONSTYPES = (
@@ -22,10 +29,14 @@ class Question(models.Model):
     question_text = models.TextField(verbose_name='Текст вопроса')
     question_type = models.CharField(max_length=25, choices=QUESTIONSTYPES, verbose_name='Тип вопроса')
     polls = models.ManyToManyField(Poll, related_name='to_polls')
-    options = ArrayField(models.CharField(max_length=200), blank=True, default="")
-    answer_position = ArrayField(models.IntegerField(), default="0")
+    options = ArrayField(models.CharField(max_length=200), blank=True, default=get_default_option)
+    answer_position = ArrayField(models.IntegerField(), default=get_default_position)
     
     def __str__(self):
         return f'{self.question_text}'
+    
+    def get_default_option():
+        return 'list'
+    
     
 
