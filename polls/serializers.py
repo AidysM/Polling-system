@@ -1,7 +1,8 @@
 from django.db import models
+from django.db.models import fields
 from rest_framework import serializers
 
-from .models import Poll
+from .models import Poll, Question
 
 
 class PollSerializer(serializers.ModelSerializer):
@@ -10,3 +11,9 @@ class PollSerializer(serializers.ModelSerializer):
         fields = ('name', 'start_date', 'end_date', 'description')
         
     
+class QuestionSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Question
+        fields = '__all__'
+        
+

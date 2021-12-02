@@ -4,7 +4,7 @@ from rest_framework import generics
 
 
 from .models import Poll, Question
-from .serializers import PollSerializer
+from .serializers import PollSerializer, QuestionSerializer
 
 
 class PollListView(generics.ListAPIView):

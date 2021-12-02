@@ -7,7 +7,7 @@ class Poll(models.Model):
     start_date = models.DateField(auto_now_add=True, verbose_name='Дата старта')
     end_date = models.DateField(verbose_name='Дата окончания')
     description = models.TextField(verbose_name='Описание')
-        
+            
     def __str__(self):
         return f'{self.name}'
     
@@ -20,7 +20,7 @@ class Question(models.Model):
         )
     question_text = models.TextField(verbose_name='Текст вопроса')
     question_type = models.CharField(max_length=25, choices=QUESTIONSTYPES, verbose_name='Тип вопроса')
-    polls = models.ManyToManyField(Poll, blank=True, related_name='to_polls')
+    polls = models.ManyToManyField(Poll, blank=True, through='PollQuestion')
     options = ArrayField(models.CharField(max_length=256), blank=True)
     answer_position = ArrayField(models.IntegerField())
     
@@ -28,5 +28,7 @@ class Question(models.Model):
         return f'{self.question_text}'
     
     
-    
+class PollQuestion(models.Model):
+    poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
