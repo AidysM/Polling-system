@@ -24,7 +24,6 @@ schema_view = get_schema_view(title='Polls API')
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('polls.urls')),
-    # path('api/', include('api.urls')),
     path('docs/', include_docs_urls(title='Polls')),
     path('schema/', schema_view),
 ]
