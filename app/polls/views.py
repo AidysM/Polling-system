@@ -1,8 +1,10 @@
 from django.db import models
 from django.shortcuts import render
-from rest_framework.generics import get_object_or_404
+from rest_framework.generics import get_object_or_404, GenericAPIView, CreateAPIView, ListAPIView
+from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.mixins import ListModelMixin, CreateModelMixin
 from rest_framework import generics
 
 
@@ -41,6 +43,26 @@ class PollView(APIView):
         return Response({
             "message": "Poll with id '{}' has been deleted.".format(pk)
         }, status=204)        
+
+
+class QuestionView(ListCreateAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
+    
+    # def get(self, request, *args, **kwargs):
+    #     return self.list(request, *args, **kwargs)
+    
+    def perform_create(self, serializer):
+        polls = get_object_or_404(Poll, id=self.request.data.get('polls'))
+        return serializer.save(polls=polls)
+    
+    # def post(self, request, *args, **kwargs):
+    #     return self.create(request, *args, **kwargs)
+
+
+class SingleQuestionView(RetrieveUpdateDestroyAPIView):
+    queryset = Question.objects.all()
+    serializer_class = QuestionSerializer
 
 
 class PollListView(generics.ListAPIView):
