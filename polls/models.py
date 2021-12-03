@@ -48,7 +48,7 @@ class Select(models.Model): # Модель выбора ответов поль�
     user = models.ForeignKey(User, related_name='user_select', on_delete=models.CASCADE)
     answer = models.BooleanField(default=False)
     selected_answer = ArrayField(models.IntegerField())
-    
+        
     def __str__(self) -> str:
         return f'{self.question} {self.user} {self.answer}'
     
