@@ -20,12 +20,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = '@6v=b(0pykecq63kj@@=f*p7vh9yw6qp7v&8vhtc(gn^hfmbsf'
+SECRET_KEY = os.environ.get("SECRET_KEY") # '@6v=b(0pykecq63kj@@=f*p7vh9yw6qp7v&8vhtc(gn^hfmbsf'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = int(os.environ.get("DEBUG", default=0)) # True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS").split(" ") # []
 
 
 # Application definition
@@ -78,12 +78,12 @@ WSGI_APPLICATION = 'pollings_project.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'polls_db',
-        'USER' : 'polls',
-        'PASSWORD' : 'polls',
-        'HOST' : '127.0.0.1',
-        'PORT' : '5432',
+        'ENGINE': os.environ.get("SQL_ENGINE", 'django.db.backends.sqlite3'),
+        'NAME': os.environ.get("SQL_DATABASE", os.path.join(BASE_DIR, 'db.sqlite3')),
+        'USER': os.environ.get("SQL_USER", 'user'),
+        'PASSWORD': os.environ.get("SQL_PASSWORD", 'password'),
+        'HOST': os.environ.get("SQL_HOST", 'localhost'),
+        'PORT': os.environ.get("SQL_PORT", '5432'),
     }
 }
 
