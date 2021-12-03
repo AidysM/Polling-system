@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.contrib.postgres.fields import ArrayField
 
 
-class Poll(models.Model):
+class Poll(models.Model): # Модель опросов
     name = models.CharField(max_length=256, verbose_name='Название')
     start_date = models.DateField(auto_now_add=True, verbose_name='Дата старта')
     end_date = models.DateField(verbose_name='Дата окончания')
@@ -13,7 +13,7 @@ class Poll(models.Model):
         return f'{self.name}'
     
 
-class Question(models.Model):
+class Question(models.Model): # Модель вопросов опроса
     QUESTIONSTYPES = (
             ('TEXT RESPONSE', 'text response'),
             ('SINGLECHOICEANSWER', 'single choice answer'), 
@@ -29,12 +29,12 @@ class Question(models.Model):
         return f'{self.question_text}'
     
     
-class PollQuestion(models.Model):
+class PollQuestion(models.Model): # Модель для связи МкМ меджу Опросами и Вопросами
     poll = models.ForeignKey(Poll, on_delete=models.CASCADE)
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
 
 
-class Answer(models.Model):
+class Answer(models.Model): # Модель ответов к вопросам
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     text = models.CharField(max_length=1024)
     order = models.IntegerField(default=0)
@@ -43,7 +43,7 @@ class Answer(models.Model):
         return f'{self.text}'
     
 
-class Select(models.Model):
+class Select(models.Model): # Модель выбора ответов пользователем на вопросы
     question = models.ForeignKey(Question, related_name='selected', on_delete=models.CASCADE)
     user = models.ForeignKey(User, related_name='user_select', on_delete=models.CASCADE)
     answer = models.BooleanField(default=False)
