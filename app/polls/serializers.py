@@ -2,7 +2,7 @@ from django.db import models
 from django.db.models import fields
 from rest_framework import serializers
 
-from .models import Poll, Question
+from .models import Poll, Question, Answer, Select
 
 
 class PollSerializer(serializers.Serializer):
@@ -29,4 +29,15 @@ class QuestionSerializer(serializers.ModelSerializer):
         model = Question
         fields = ('id', 'question_text', 'question_type', 'polls', 'options', 'answer_position')
         
+
+class AnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ('id', 'question', 'text', 'order')
+        
+
+class SelectSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Select
+        fields = ('id', 'question', 'user', 'answer', 'selected_answer')
 

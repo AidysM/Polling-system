@@ -5,11 +5,11 @@ from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, Retrieve
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.mixins import ListModelMixin, CreateModelMixin
-from rest_framework import generics
+from rest_framework import generics, viewsets
 
 
-from .models import Poll, Question
-from .serializers import PollSerializer, QuestionSerializer
+from .models import Poll, Question, Answer, Select
+from .serializers import PollSerializer, QuestionSerializer, AnswerSerializer, SelectSerializer
 
 
 class PollView(APIView):
@@ -63,6 +63,27 @@ class QuestionView(ListCreateAPIView):
 class SingleQuestionView(RetrieveUpdateDestroyAPIView):
     queryset = Question.objects.all()
     serializer_class = QuestionSerializer
+
+
+class AnswerView(viewsets.ViewSet):
+    """
+    A simple ViewSet that for listing or retrieving users.
+    """
+    def list(self, request):
+        queryset = Answer.objects.all()
+        serializer = AnswerSerializer(queryset, many=True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        queryset = Answer.objects.all()
+        user = get_object_or_404(queryset, pk=pk)
+        serializer = AnswerSerializer(user)
+        return Response(serializer.data)
+
+
+class SelectViewSet(viewsets.ModelViewSet):
+    serializer_class = SelectSerializer
+    queryset = Select.objects.all()
 
 
 class PollListView(generics.ListAPIView):
