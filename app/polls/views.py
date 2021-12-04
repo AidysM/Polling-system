@@ -86,16 +86,16 @@ class SelectViewSet(viewsets.ModelViewSet):
     queryset = Select.objects.all()
 
 
-class PollListView(generics.ListAPIView):
-    model = Poll
-    template_name = 'polls/poll_list.html'
-    queryset = Poll.objects.all()
-    serializer_class = PollSerializer
+# class PollListView(generics.ListAPIView):
+#     model = Poll
+#     template_name = 'polls/poll_list.html'
+#     queryset = Poll.objects.all()
+#     serializer_class = PollSerializer
     
 
-class PollDetailView(generics.RetrieveAPIView):
-    model = Poll
-    template_name = 'polls/poll_detail.html'
-    queryset = Poll.objects.all()
-    serializer_class = PollSerializer
+# class PollDetailView(generics.RetrieveAPIView):
+#     model = Poll
+#     template_name = 'polls/poll_detail.html'
+#     queryset = Poll.objects.all()
+#     serializer_class = PollSerializer
     
