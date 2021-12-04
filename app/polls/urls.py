@@ -8,10 +8,8 @@ from .views import AnswerView, SelectViewSet # , PollListView, PollDetailView
 app_name = 'polls'
 
 urlpatterns = [
-    # path('', PollListView.as_view(), name='polls'),
-    path('polls/', PollView.as_view()),
-    # path('<int:pk>/', PollDetailView.as_view(), name='poll'),
-    path('polls/<int:pk>/', PollView.as_view()),
+    path('', PollView.as_view()),
+    path('<int:pk>/', PollView.as_view()),
     path('questions/', QuestionView.as_view()),
     path('questions/<int:pk>/', SingleQuestionView.as_view()),
     path('answers/', AnswerView.as_view({'get': 'list'})),
